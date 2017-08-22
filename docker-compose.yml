@@ -1,0 +1,23 @@
+version: '2'
+
+services:
+    fleet-control-slave:
+        build: .
+        env_file: .env
+        volumes:
+            - /sys:/sys
+            - .:/var/www/html
+            - ../robot-scripts/:/var/robot-scripts
+        working_dir: /var/www/html
+        command: ["./bin/wait-for-it.sh", "php", "bin/execute-orders.php"]
+
+    slave-php:
+        build: .
+        container_name: slave-php
+        env_file: .env
+        volumes:
+            - /sys:/sys
+            - .:/var/www/html
+            - ../robot-scripts/:/var/robot-scripts
+        working_dir: /var/www/html
+        command: sleep 100000000
